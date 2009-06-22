@@ -36,7 +36,12 @@ module CouchRest
           doc = db.get id
           new(doc)
         end
-        
+
+        # Load multiple documents by ID (aka multi-document-fetch)
+        def get_bulk(ids, db = database)
+          db.get_bulk(ids)["rows"].collect {|i| new(i["doc"]) }
+        end
+
       end
       
     end

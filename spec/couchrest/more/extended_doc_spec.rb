@@ -81,7 +81,17 @@ describe "ExtendedDocument" do
       @obj.should be_a_new_document
     end
   end
-  
+
+  describe "multi-document-fetch" do
+    it "should find multiple documents by id with get_bulk" do
+      obj1 = WithDefaultValues.new.create
+      obj2 = WithDefaultValues.new.create
+      r = Basic.get_bulk([obj1.id,obj2.id])
+      r.size.should == 2
+      r.first.should be_an_instance_of(Basic)
+    end
+  end
+
   describe "update attributes without saving" do
     before(:each) do
       a = Article.get "big-bad-danger" rescue nil
